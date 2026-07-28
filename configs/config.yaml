@@ -1,0 +1,41 @@
+components_manager:
+  coro_pool:
+    initial_size: 5000
+    max_size: 50000
+    stack_usage_monitor_enabled: false
+  task_processors:
+    main-task-processor:
+      worker_threads: 2
+
+    fs-task-processor:
+      worker_threads: 1
+
+  default_task_processor: main-task-processor
+
+  components:
+    server:
+      listener:
+        port: 8080
+        task_processor: main-task-processor
+
+    logging:
+      loggers:
+        default:
+          file_path: '@stderr'
+          level: debug
+          overflow_behavior: discard
+
+
+
+
+
+    handler-ping:
+      path: /ping
+      method: GET
+      task_processor: main-task-processor
+
+    jacob:
+      path: /jacobsthal-lucas/{n}
+      method: GET
+      task_processor: main-task-processor
+
